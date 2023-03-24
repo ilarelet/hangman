@@ -1,19 +1,16 @@
 class Game
-    attr_accessor :used_letters, :secret_word, :guessed, :mistakes
 
     def initialize(dictionary)
         #select a random secret word from the doctionary
-        @secret_word = dictionary.random_word
+        @secret_word = dictionary.random_word.upcase
         #create a display of guessed letters (so far all the letters are unguessed)
         @guessed =[]
         while @guessed.length < @secret_word.length
-            guessed.push("_")
+            @guessed.push("_")
         end
         #the array of used letters will help the players keep track of what they already tried
         @used_letters = []
         @mistakes = 0
-        #display the "new game" message
-        self.start_msg
     end
     
     def start_msg
@@ -36,13 +33,15 @@ class Game
             letter = gets.chomp.upcase
             #the input has to be a single letter (between A and Z)
             raise 'Please enter one letter at a time!' if letter.length != 1
-            raise 'Please enter a letter!' if letter <= 'A' or letter >= 'Z'
+            raise 'Please enter a letter!' if letter < 'A' or letter > 'Z'
             if @used_letters.include?(letter) or @guessed.include?(letter)
                 raise "You already tried #{letter}. Make a different guess!" 
             end
         rescue 
+            puts error.message
             retry
         end
+        puts
 
         check_letter(letter)
     end
@@ -50,15 +49,29 @@ class Game
     def check_letter(letter)
         if @secret_word.include?(letter)
             puts 'Good guess!'
-            @guessed.map!.with_index do |item, index|
+            @guessed.map.with_index do |item, index|
                 if @secret_word[index] == letter
-                    @guessed[index] == letter
+                    @guessed[index] = letter
                 end
             end
         else
             puts "Sorry, \"#{letter}\" is not in the word we guessed."
-            mistakes += 1
-            used_letters.push letter
+            @mistakes += 1
+            @used_letters.push letter
         end
+    end
+
+    def play_game
+        #display the "new game" message
+        self.start_msg
+        while @mistakes < 7
+            self.prompt_guess
+            self.display_status
+            if @guessed.join("") == @secret_word
+                puts "Congratulations! You won the game!"
+                return
+            end
+        end
+        puts "Sorry you've made 7 mistakes. Game over, you've lost."
     end
 end

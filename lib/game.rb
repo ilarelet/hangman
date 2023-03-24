@@ -12,3 +12,9 @@ class Game
         #display the "new game" message
         self.start_msg
     end
+    
+    def start_msg
+        puts 'A new game begins!'
+        puts
+        puts 'In this game you need to guess an English word we randomly chose for you.'
+    end

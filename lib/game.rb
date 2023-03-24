@@ -1,4 +1,3 @@
-require_relative 'dictionary.rb'
 class Game
     attr_accessor :used_letters, :secret_word, :guessed, :mistakes
 
@@ -21,7 +20,6 @@ class Game
         puts "A new game begins!\n"
         puts "In this game you need to guess an English word we randomly chose for you. Good luck!\n"
         self.display_status
-    end
     end
 
     def display_status

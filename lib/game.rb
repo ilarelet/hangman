@@ -12,37 +12,27 @@ class Game
         @used_letters = []
         @mistakes = 0
     end
-    
-    def start_msg
-        puts "A new game begins!"
-        puts
-        puts "In this game you need to guess an English word we randomly chose for you. Good luck!"
-        self.display_status
-    end
-
-    def display_status
-        puts "#{@mistakes} out of 7 mistakes made." unless  @mistakes == 0
-        puts "You've used the following letters: #{@used_letters.join(', ')}" unless  @used_letters == []
-        puts "The word: | #{@guessed.join(' ')} |"
-        puts
-    end
 
     def prompt_guess
         begin
             puts 'Guess a letter: '
             letter = gets.chomp.upcase
             #the input has to be a single letter (between A and Z)
-            raise 'Please enter one letter at a time!' if letter.length != 1
-            raise 'Please enter a letter!' if letter < 'A' or letter > 'Z'
+            if letter.length != 1
+                puts 'Please enter one letter at a time!'
+                raise
+            end
+            if letter < 'A' or letter > 'Z'
+                puts 'Please enter a letter!'
+                raise
+            end
             if @used_letters.include?(letter) or @guessed.include?(letter)
-                raise "You already tried #{letter}. Make a different guess!" 
+                puts "You already tried #{letter}. Make a different guess!" 
+                raise 
             end
         rescue 
-            puts error.message
             retry
         end
-        puts
-
         check_letter(letter)
     end
 
@@ -59,6 +49,7 @@ class Game
             @mistakes += 1
             @used_letters.push letter
         end
+        puts
     end
 
     def play_game
@@ -73,5 +64,19 @@ class Game
             end
         end
         puts "Sorry you've made 7 mistakes. Game over, you've lost."
+    end
+    
+    def start_msg
+        puts "A new game begins!"
+        puts
+        puts "In this game you need to guess an English word we randomly chose for you. Good luck!"
+        self.display_status
+    end
+
+    def display_status
+        puts "#{@mistakes} out of 7 mistakes made." unless  @mistakes == 0
+        puts "You've used the following letters: #{@used_letters.join(', ')}" unless  @used_letters == []
+        puts "The word: | #{@guessed.join(' ')} |"
+        puts
     end
 end

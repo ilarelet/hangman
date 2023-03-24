@@ -17,15 +17,31 @@ class Game
     end
     
     def start_msg
-        puts "A new game begins!\n"
-        puts "In this game you need to guess an English word we randomly chose for you. Good luck!\n"
+        puts "A new game begins!"
+        puts
+        puts "In this game you need to guess an English word we randomly chose for you. Good luck!"
         self.display_status
     end
 
     def display_status
-        puts "#{@mistakes} out of 7 mistakes made.\n" unless  @mistakes == 0
-        puts "You've used the following letters: #{@used_letters.join(', ')}\n" unless  @used_letters == []
-        puts "The word: |#{@guessed.join(' ')}|\n"
-        puts 'Guess a letter: '
+        puts "#{@mistakes} out of 7 mistakes made." unless  @mistakes == 0
+        puts "You've used the following letters: #{@used_letters.join(', ')}" unless  @used_letters == []
+        puts "The word: | #{@guessed.join(' ')} |"
+        puts
+    end
+
+    def prompt_guess
+        begin
+            puts 'Guess a letter: '
+            letter = gets.chomp.upcase
+            #the input has to be a single letter (between A and Z)
+            raise 'Please enter one letter at a time!' if letter.length != 1
+            raise 'Please enter a letter!' if letter <= 'A' or letter >= 'Z'
+            raise "You already tried #{letter}. Make a different guess!" if @used_letters.include?(letter)
+        rescue 
+            retry
+        end
+
+        check_letter(letter)
     end
 end

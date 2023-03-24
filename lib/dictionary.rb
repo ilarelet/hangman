@@ -5,7 +5,7 @@ class Dictionary
         @words = Array.new
         File.open(dict_file, 'r') do |file|
             file.readlines.each do |word|
-                @words.push word 
+                @words.push word.chomp 
             end
         end
     end

@@ -37,11 +37,28 @@ class Game
             #the input has to be a single letter (between A and Z)
             raise 'Please enter one letter at a time!' if letter.length != 1
             raise 'Please enter a letter!' if letter <= 'A' or letter >= 'Z'
-            raise "You already tried #{letter}. Make a different guess!" if @used_letters.include?(letter)
+            if @used_letters.include?(letter) or @guessed.include?(letter)
+                raise "You already tried #{letter}. Make a different guess!" 
+            end
         rescue 
             retry
         end
 
         check_letter(letter)
+    end
+
+    def check_letter(letter)
+        if @secret_word.include?(letter)
+            puts 'Good guess!'
+            @guessed.map!.with_index do |item, index|
+                if @secret_word[index] == letter
+                    @guessed[index] == letter
+                end
+            end
+        else
+            puts "Sorry, \"#{letter}\" is not in the word we guessed."
+            mistakes += 1
+            used_letters.push letter
+        end
     end
 end

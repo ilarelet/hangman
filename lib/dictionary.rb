@@ -1,5 +1,5 @@
 class Dictionary
-    attr_reader :words, :size
+    attr_reader :words
 
     def initialize(dict_file)
         @words = Array.new

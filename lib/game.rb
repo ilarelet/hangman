@@ -85,20 +85,6 @@ class Game
         puts "The word: | #{@guessed.join(' ')} |"
         puts
     end
-    
-    def start_msg
-        puts "A new game begins!"
-        puts
-        puts "In this game you need to guess an English word we randomly chose for you. Good luck!"
-        self.display_status
-    end
-
-    def display_status
-        puts "#{@mistakes} out of 7 mistakes made." unless  @mistakes == 0
-        puts "You've used the following letters: #{@used_letters.join(', ')}" unless  @used_letters == []
-        puts "The word: | #{@guessed.join(' ')} |"
-        puts
-    end
 
     def savegame
         savefile = File.open('savefile.json', 'w') 

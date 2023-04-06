@@ -1,4 +1,5 @@
 class Game
+    require 'json'
 
     def initialize(dictionary)
         #select a random secret word from the doctionary
@@ -15,8 +16,11 @@ class Game
 
     def prompt_guess
         begin
-            puts 'Guess a letter: '
+            puts 'Guess a letter or type "save" to save the game: '
             letter = gets.chomp.upcase
+            if letter == "SAVE"
+                self.savegame
+            end
             #the input has to be a single letter (between A and Z)
             if letter.length != 1
                 puts 'Please enter one letter at a time!'
@@ -93,5 +97,12 @@ class Game
         puts "You've used the following letters: #{@used_letters.join(', ')}" unless  @used_letters == []
         puts "The word: | #{@guessed.join(' ')} |"
         puts
+    end
+
+    def savegame
+        savefile = File.open('savefile.json', 'w') 
+        savedata = {secret_word: @secret_word, mistakes: @mistakes, guessed: @guessed, used_letters: @used_letters}
+        File.write(savefile, JSON.pretty_generate(savedata))
+        puts "Game saved!"
     end
 end

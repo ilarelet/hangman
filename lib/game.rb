@@ -73,9 +73,15 @@ class Game
     end
     
     def start_msg
-        puts "A new game begins!"
-        puts
-        puts "In this game you need to guess an English word we randomly chose for you. Good luck!"
+        puts "Welcome to hangman!"
+        puts "If you'd like to load an old game enter 'load'. If you want to start a new game press 'Enter' or type anything else"
+        if gets.chomp.downcase == "load"
+            self.loadgame
+        else
+            puts "A new game begins!"
+            puts
+            puts "In this game you need to guess an English word we randomly chose for you. Good luck!"
+        end
         self.display_status
     end
 

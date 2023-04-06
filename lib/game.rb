@@ -96,6 +96,22 @@ class Game
         savefile = File.open('savefile.json', 'w') 
         savedata = {secret_word: @secret_word, mistakes: @mistakes, guessed: @guessed, used_letters: @used_letters}
         File.write(savefile, JSON.pretty_generate(savedata))
+        savefile.close
         puts "Game saved!"
+    end
+
+    def loadgame
+        savefile = File.read('savefile.json')
+        loaddata = JSON.parse(savefile)
+        if loaddata['secret_word'] == nil
+            puts 'Game loading failed - no file found. Starting a new game...'
+            return
+        else
+            @secret_word = loaddata['secret_word']
+            @mistakes = loaddata['mistakes']
+            @guessed = loaddata['guessed']
+            @used_letters = loaddata['used_letters']
+            puts 'Game loaded!'
+        end
     end
 end

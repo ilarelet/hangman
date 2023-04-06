@@ -16,10 +16,11 @@ class Game
 
     def prompt_guess
         begin
-            puts 'Guess a letter or type "save" to save the game: '
+            puts 'GUESS A LETTER or type "save" to save the game and exit: '
             letter = gets.chomp.upcase
             if letter == "SAVE"
                 self.savegame
+                exit
             end
             #the input has to be a single letter (between A and Z)
             if letter.length != 1

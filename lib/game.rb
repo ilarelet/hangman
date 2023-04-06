@@ -64,6 +64,7 @@ class Game
             end
         end
         puts "Sorry you've made 7 mistakes. Game over, you've lost."
+        puts "The correct answer was #{@secret_word.upcase}"
     end
     
     def start_msg

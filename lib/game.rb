@@ -101,17 +101,20 @@ class Game
     end
 
     def loadgame
+        begin
         savefile = File.read('savefile.json')
         loaddata = JSON.parse(savefile)
-        if loaddata['secret_word'] == nil
+        #if the file is empty create a new game
+        raise if loaddata['secret_word'] == nil
+        @secret_word = loaddata['secret_word']
+        @mistakes = loaddata['mistakes']
+        @guessed = loaddata['guessed']
+        @used_letters = loaddata['used_letters']
+        puts 'Game loaded!'
+
+        rescue
             puts 'Game loading failed - no file found. Starting a new game...'
             return
-        else
-            @secret_word = loaddata['secret_word']
-            @mistakes = loaddata['mistakes']
-            @guessed = loaddata['guessed']
-            @used_letters = loaddata['used_letters']
-            puts 'Game loaded!'
         end
     end
 end
